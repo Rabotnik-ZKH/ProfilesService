@@ -12,6 +12,8 @@ public class DoctorResponseDTO()
 
     public string? MiddleName { get; set; }
 
+    public DateTime DateOfBirth { get; set; }
+
     public int Experience { get; set; }
 
     public int Status { get; set; } 
@@ -19,5 +21,9 @@ public class DoctorResponseDTO()
     public OfficeDTO? Office { get; set; }
 
     public int SpecializationId { get; set; }
+
+    public string SpecializationName { get; set; }
+
+    public string OfficeAddress { get; set; }
 }
 

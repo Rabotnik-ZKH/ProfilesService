@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace Profiles.Domain.Entities;
 
 public class Doctor : BaseUser
@@ -11,4 +12,8 @@ public class Doctor : BaseUser
 
     [Required]
     public int SpecializationId { get; set; }
+
+    public string SpecializationName { get; set; }
+
+    public string OfficeAddress { get; set; }
 }

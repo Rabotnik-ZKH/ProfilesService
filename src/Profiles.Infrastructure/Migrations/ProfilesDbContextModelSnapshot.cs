@@ -113,8 +113,16 @@ namespace Profiles.Infrastructure.Migrations
                     b.Property<DateTime>("CareerStartYear")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OfficeAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SpecializationId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SpecializationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

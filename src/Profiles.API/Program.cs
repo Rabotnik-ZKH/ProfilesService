@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.IdentityModel.Tokens;
 using Profiles.API.Extensions;
 using Serilog;
 
@@ -9,6 +10,17 @@ builder.Host.UseSerilog((ctx, lc) =>
     .ReadFrom.Configuration(ctx.Configuration));
 
 builder.Logging.ClearProviders();
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5005";
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false
+        };
+    });
 
 ValidatorOptions.Global.LanguageManager.Enabled = false;
 
