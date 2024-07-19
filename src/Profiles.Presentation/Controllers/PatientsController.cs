@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Profiles.Contracts.DTOs.Patient;
 using Profiles.Contracts.Pagination;
 using Profiles.Services.Abstractions;
+using System.Net.Mime;
 
 namespace Profiles.Presentation.Controllers;
 
@@ -16,14 +17,8 @@ public class PatientsController : ControllerBase
     public PatientsController(IPatientsService patientsService) =>
         _patientsService = patientsService;
 
-    /// <summary>
-    /// Returns list of patients
-    /// </summary>
-    /// <param name="queryParameters"></param>
-    /// <response code="204">Returns patients succesfully</response>
-    /// <response code="404">Returns if there aren't any patients in the database</response>
     [HttpGet]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllPatients([FromQuery] PatientsQueryParameters queryParameters)
@@ -33,14 +28,8 @@ public class PatientsController : ControllerBase
         return getPatientsResult.Match<IActionResult>(Ok, notFound => NotFound());
     }
 
-    /// <summary>
-    /// Returns patient by provided id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <response code="200">Returns patient succesfully</response>
-    /// <response code="404">Returns if patient with provided id was not found in the database</response>
     [HttpGet("{id}", Name = "GetPatientById")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetPatientById(Guid id)
@@ -50,15 +39,8 @@ public class PatientsController : ControllerBase
         return getPatientResult.Match<IActionResult>(Ok, notFound => NotFound());
     }
 
-    /// <summary>
-    /// Add new patient to the database
-    /// </summary>
-    /// <param name="validator"></param>
-    /// <param name="newPatient"></param>
-    /// <response code="201">Returns if patient was created</response>
-    /// <response code="400">Returns if entity was invalid</response>
     [HttpPost]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPatient(IValidator<PatientCreateDTO> validator,
@@ -76,18 +58,8 @@ public class PatientsController : ControllerBase
         return BadRequest(validationResult.ToDictionary());
     }
 
-    /// <summary>
-    /// Update patient by provided id
-    /// </summary>
-    /// <param name="validator"></param>
-    /// <param name="id"></param>
-    /// <param name="patientUpdate"></param>
-    /// <returns></returns>
-    /// <response code="204">Returns if patient was updated</response>
-    /// <response code="400">Returns if entity was invalid</response>
-    /// <response code="404">Returns if there is no patient with provided id in the database</response>
     [HttpPut("{id}")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -107,15 +79,8 @@ public class PatientsController : ControllerBase
         return BadRequest(validationResult.ToDictionary());
     }
 
-    /// <summary>
-    /// Delete patient by provided id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <response code="204">Returns if patient was deleted</response>
-    /// <response code="404">Returns if there is no patient with provided id in the database</response>
     [HttpDelete("{id}")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeletePatient([FromRoute] Guid id)

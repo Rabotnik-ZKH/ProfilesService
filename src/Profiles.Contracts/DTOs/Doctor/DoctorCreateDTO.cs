@@ -17,7 +17,11 @@ public class DoctorCreateDTO
 
     public int SpecializationId { get; set; }
 
+    public string SpecializationName { get; set; } = null!;
+
     public string OfficeId { get; set; } = null!;
+
+    public string OfficeAddress { get; set; } = null!;
 
     public DateTime CareerStartYear { get; set; }
 

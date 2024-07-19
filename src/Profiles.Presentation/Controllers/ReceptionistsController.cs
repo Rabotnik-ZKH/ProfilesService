@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profiles.Contracts.DTOs.Receptionist;
 using Profiles.Services.Abstractions;
+using System.Net.Mime;
 
 namespace Profiles.Presentation.Controllers;
 
@@ -15,14 +16,8 @@ public class ReceptionistsController : ControllerBase
     public ReceptionistsController(IReceptionistsService receptionistsService) =>
         _receptionistsService = receptionistsService;
 
-    /// <summary>
-    /// Returns list of receptionists
-    /// </summary>
-    /// <returns></returns>
-    /// <response code="200">Returns receptionists succesfully</response>
-    /// <response code="404">Returns if there aren't any receptionists in the database</response>
     [HttpGet]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllReceptionists()
@@ -32,15 +27,8 @@ public class ReceptionistsController : ControllerBase
         return getReceptionistsResult.Match<IActionResult>(Ok, notFound => NotFound());
     }
 
-    /// <summary>
-    /// Returns receptionist by provided id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <response code="200">Returns receptionists succesfully</response>
-    /// <response code="404">Returns if there aren't any receptionists in the database</response>
     [HttpGet("{id}", Name = "GetReceptionistById")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
@@ -50,16 +38,8 @@ public class ReceptionistsController : ControllerBase
         return getReceptionistResult.Match<IActionResult>(Ok, notFound => NotFound());
     }
 
-    /// <summary>
-    /// Add receptionist in the database
-    /// </summary>
-    /// <param name="validator"></param>
-    /// <param name="newRecepionist"></param>
-    /// <returns></returns>
-    /// <response code="201">Returns if receptionist was created</response>
-    /// <response code="400">Returns if entity was invalid</response>
     [HttpPost]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddReceptionist(IValidator<ReceptionistCreateDTO> validator, 
@@ -77,17 +57,8 @@ public class ReceptionistsController : ControllerBase
         return BadRequest(validationResult.ToDictionary());
     }
 
-    /// <summary>
-    /// Update receptionist by provided id
-    /// </summary>
-    /// <param name="validator"></param>
-    /// <param name="id"></param>
-    /// <param name="updatedReceptionist"></param>
-    /// <response code="204">Returns if receptionist was updated</response>
-    /// <response code="400">Returns if entity was invalid</response>
-    /// <response code="404">Returns if there is no receptionist with provided id in the database</response>
     [HttpPut("{id}")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -107,15 +78,8 @@ public class ReceptionistsController : ControllerBase
         return BadRequest(validationResult.ToDictionary());
     }
 
-    /// <summary>
-    /// Delete receptionist by provided id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <response code="204">Returns if receptionist was deleted</response>
-    /// <response code="404">Returns if there is no receptionist with provided id in the database</response>
     [HttpDelete("{id}")]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteReceptionist(Guid id)
