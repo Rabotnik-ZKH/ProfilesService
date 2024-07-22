@@ -71,6 +71,7 @@ public static class WebApplicationBuilderExtention
 
         builder.Services.AddDbContext<ProfilesDbContext>(opt =>
             opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+
         builder.Services.AddControllers()
             .AddApplicationPart(typeof(Presentation.Controllers.DoctorsController).Assembly);
         builder.Services.AddEndpointsApiExplorer();
