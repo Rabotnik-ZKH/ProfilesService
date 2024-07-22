@@ -11,7 +11,6 @@ public class MapperProfile : Profile
         #region Doctor
 
         CreateMap<Doctor, DoctorResponseDTO>()
-            .ForPath(dest => dest.Office.OfficeId, opt => opt.MapFrom(src => src.OfficeId))
             .ForMember(dest => dest.Experience, 
             opt => opt.MapFrom(src => DateTime.Now.AddYears(1).AddYears(-src.CareerStartYear.Year).Year));
 

@@ -6,7 +6,7 @@ namespace Profiles.API.Extensions;
 
 public static class MigrationManager
 {
-    private static int retryForAvailability = 0;
+    private static int _retryForAvailability = 0;
 
     public static async Task<IHost> MigrateDatabaseAsync(this IHost host)
     {
@@ -18,16 +18,16 @@ public static class MigrationManager
             }
             catch (Exception ex)
             {
-                if (retryForAvailability >= 5)
+                if (_retryForAvailability >= 5)
                 {
                     throw;
                 }
 
-                retryForAvailability++;
+                _retryForAvailability++;
 
                 Log.Warning(ex.Message);
 
-                await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, retryForAvailability)));
+                await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, _retryForAvailability)));
 
                 await MigrateDatabaseAsync(host);
             }
