@@ -4,5 +4,7 @@ public class DoctorsQueryParameters
 {
     public Guid? SpecializationId { get; set; }
 
+    public string? OfficeId { get; set; }
+
     public string? SearchFullName {  get; set; }
 }

@@ -4,6 +4,7 @@ using OneOf;
 using OneOf.Types;
 using Profiles.Contracts.DTOs.OuterServicesModels;
 using Profiles.Contracts.DTOs.Receptionist;
+using Profiles.Contracts.Pagination;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Interfaces;
 using Profiles.Services.Abstractions;
@@ -26,9 +27,9 @@ public class ReceptionistsService : IReceptionistsService
         _accountsRepository = accountsRepository;
     }
 
-    public async Task<OneOf<List<ReceptionistResponseDTO>, NotFound>> GetAllReceptionistsAsync()
+    public async Task<OneOf<List<ReceptionistResponseDTO>, NotFound>> GetAllReceptionistsAsync(ReceptionistsQueryParameters parameters)
     {
-        var receptionists = await _receptionistsRepository.GetAllAsync();
+        var receptionists = await _receptionistsRepository.GetAllAsync(parameters);
 
         if (receptionists.IsNullOrEmpty())
         {

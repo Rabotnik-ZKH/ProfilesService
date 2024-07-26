@@ -5,6 +5,16 @@ namespace Profiles.Infrastructure.Repositories;
 
 public static class RepositoryExtentions
 {
+    public static IQueryable<Receptionist> FilterReceptionistsByOffice(this IQueryable<Receptionist> receptionists, string? officeId)
+        => officeId is null
+        ? receptionists
+        : receptionists.Where(r => r.OfficeId.Equals(officeId));
+
+    public static IQueryable<Doctor> FilterDoctorsByOffice(this IQueryable<Doctor> doctors, string? officeId)
+        => officeId is null
+        ? doctors
+        : doctors.Where(d => d.OfficeId.Equals(officeId));
+
     public static IQueryable<Doctor> FilterDoctorsBySpecialization(this IQueryable<Doctor> doctors, Guid? specializationId)
         => specializationId is null
         ? doctors

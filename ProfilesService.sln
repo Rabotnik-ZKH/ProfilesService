@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Services", "src\Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Services.Abstractions", "src\Profiles.Services.Abstractions\Profiles.Services.Abstractions.csproj", "{E2C7CE77-97BC-4BB2-B0B1-26D37B9A81E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiles.MassTransit", "src\Profiles.MassTransit\Profiles.MassTransit.csproj", "{666AE03A-D71A-44C3-A191-1EE27F5CEAD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{E2C7CE77-97BC-4BB2-B0B1-26D37B9A81E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C7CE77-97BC-4BB2-B0B1-26D37B9A81E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C7CE77-97BC-4BB2-B0B1-26D37B9A81E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666AE03A-D71A-44C3-A191-1EE27F5CEAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666AE03A-D71A-44C3-A191-1EE27F5CEAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666AE03A-D71A-44C3-A191-1EE27F5CEAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666AE03A-D71A-44C3-A191-1EE27F5CEAD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +72,9 @@ Global
 		{E0086537-E663-4F93-85E1-BDC12EA6BE68} = {3DF09D7F-CFBA-47EE-BBE1-1AB33AA9E63A}
 		{3F56B746-FC05-4896-9DCE-65A4E76EF6BB} = {3DF09D7F-CFBA-47EE-BBE1-1AB33AA9E63A}
 		{E2C7CE77-97BC-4BB2-B0B1-26D37B9A81E2} = {3DF09D7F-CFBA-47EE-BBE1-1AB33AA9E63A}
+		{666AE03A-D71A-44C3-A191-1EE27F5CEAD2} = {B283BE14-4920-4637-8C9E-CB1293168E42}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {299F80A5-6E60-4F1A-8C48-11922ACFBFED}
 	EndGlobalSection
 EndGlobal

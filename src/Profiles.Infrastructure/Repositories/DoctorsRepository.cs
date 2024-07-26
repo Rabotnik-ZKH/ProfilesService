@@ -15,6 +15,7 @@ public class DoctorsRepository : IDoctorsRepository
     public async Task<List<Doctor>> GetAllAsync(DoctorsQueryParameters queryParameters) =>
         await _context.Doctors.AsNoTracking()
             .Include(d => d.Account)
+            .FilterDoctorsByOffice(queryParameters.OfficeId)
             .FilterDoctorsBySpecialization(queryParameters.SpecializationId)
             .Search(queryParameters.SearchFullName)
             .ToListAsync();

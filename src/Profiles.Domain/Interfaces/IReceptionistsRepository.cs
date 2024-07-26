@@ -1,10 +1,11 @@
-﻿using Profiles.Domain.Entities;
+﻿using Profiles.Contracts.Pagination;
+using Profiles.Domain.Entities;
 
 namespace Profiles.Domain.Interfaces;
 
 public interface IReceptionistsRepository
 {
-    public Task<List<Receptionist>> GetAllAsync();
+    public Task<List<Receptionist>> GetAllAsync(ReceptionistsQueryParameters parameters);
 
     public Task<Receptionist?> GetByIdAsync(Guid id);
 

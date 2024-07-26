@@ -2,5 +2,5 @@
 
 public class Receptionist : BaseUser
 {
-
+    public string OfficeAddress { get; set; }
 }

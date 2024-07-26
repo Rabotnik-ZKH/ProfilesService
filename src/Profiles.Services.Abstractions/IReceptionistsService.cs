@@ -1,12 +1,13 @@
 ﻿using OneOf;
 using OneOf.Types;
 using Profiles.Contracts.DTOs.Receptionist;
+using Profiles.Contracts.Pagination;
 
 namespace Profiles.Services.Abstractions;
 
 public interface IReceptionistsService
 {
-    public Task<OneOf<List<ReceptionistResponseDTO>, NotFound>> GetAllReceptionistsAsync();
+    public Task<OneOf<List<ReceptionistResponseDTO>, NotFound>> GetAllReceptionistsAsync(ReceptionistsQueryParameters parameters);
 
     public Task<OneOf<ReceptionistResponseDTO, NotFound>> GetReceptionistByIdAsync(Guid id);
 

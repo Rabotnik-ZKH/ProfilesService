@@ -144,6 +144,16 @@ namespace Profiles.Infrastructure.Migrations
                 {
                     b.HasBaseType("Profiles.Domain.Entities.BaseUser");
 
+                    b.Property<string>("OfficeAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Users", t =>
+                        {
+                            t.Property("OfficeAddress")
+                                .HasColumnName("Receptionist_OfficeAddress");
+                        });
+
                     b.HasDiscriminator().HasValue("Receptionist");
                 });
 

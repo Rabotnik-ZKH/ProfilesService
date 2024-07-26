@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Profiles.Contracts.Pagination;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Interfaces;
 using Profiles.Infrastructure.Data;
@@ -12,9 +13,11 @@ public class ReceptionistsRepository : IReceptionistsRepository
     public ReceptionistsRepository(ProfilesDbContext context) => 
         _context = context;
 
-    public async Task<List<Receptionist>> GetAllAsync() =>
+    public async Task<List<Receptionist>> GetAllAsync(ReceptionistsQueryParameters parameters) =>
         await _context.Receptionists.AsNoTracking()
-            .Include(r => r.Account).ToListAsync();
+            .FilterReceptionistsByOffice(parameters.OfficeId)
+            .Include(r => r.Account)
+            .ToListAsync();
 
     public async Task<Receptionist?> GetByIdAsync(Guid receptionistId) =>
         await _context.Receptionists.AsNoTracking().Include(r => r.Account)

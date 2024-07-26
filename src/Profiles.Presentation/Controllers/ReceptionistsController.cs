@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profiles.Contracts.DTOs.Receptionist;
+using Profiles.Contracts.Pagination;
 using Profiles.Services.Abstractions;
 using System.Net.Mime;
 
@@ -20,9 +21,9 @@ public class ReceptionistsController : ControllerBase
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllReceptionists()
+    public async Task<IActionResult> GetAllReceptionists([FromQuery] ReceptionistsQueryParameters parameters)
     {
-        var getReceptionistsResult = await _receptionistsService.GetAllReceptionistsAsync();
+        var getReceptionistsResult = await _receptionistsService.GetAllReceptionistsAsync(parameters);
 
         return getReceptionistsResult.Match<IActionResult>(Ok, notFound => NotFound());
     }
