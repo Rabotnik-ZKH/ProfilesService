@@ -50,9 +50,9 @@ public class ReceptionistsController : ControllerBase
 
         if (validationResult.IsValid)
         {
-            var createdReceptionist = await _receptionistsService.CreateReceptionistAsync(newRecepionist);
+            var createdReceptionistId = await _receptionistsService.CreateReceptionistAsync(newRecepionist);
 
-            return CreatedAtRoute("GetReceptionistById", new { createdReceptionist.Id }, createdReceptionist);
+            return CreatedAtRoute("GetReceptionistById", new { createdReceptionistId }, createdReceptionistId);
         }
 
         return BadRequest(validationResult.ToDictionary());

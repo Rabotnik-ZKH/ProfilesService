@@ -50,9 +50,9 @@ public class PatientsController : ControllerBase
 
         if (validationResult.IsValid)
         {
-            var createdPatient = await _patientsService.CreatePatientAsync(newPatient);
+            var createdPatientGuid = await _patientsService.CreatePatientAsync(newPatient);
 
-            return CreatedAtAction("GetPatientById", new { createdPatient.Id }, createdPatient);
+            return CreatedAtAction("GetPatientById", new { id = createdPatientGuid }, createdPatientGuid);
         }
 
         return BadRequest(validationResult.ToDictionary());

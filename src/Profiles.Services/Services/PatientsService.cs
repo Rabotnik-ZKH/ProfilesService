@@ -52,7 +52,7 @@ public class PatientsService : IPatientsService
         return mappedPatient;
     }
 
-    public async Task<PatientResponseDTO> CreatePatientAsync(PatientCreateDTO newPatient)
+    public async Task<Guid> CreatePatientAsync(PatientCreateDTO newPatient)
     {
         var newPatientEntity = _mapper.Map<Patient>(newPatient);
 
@@ -65,9 +65,7 @@ public class PatientsService : IPatientsService
 
         await _patientsRepository.CreateAsync(newPatientEntity);
 
-        var patientResult = _mapper.Map<PatientResponseDTO>(newPatientEntity);
-
-        return patientResult;
+        return newPatientEntity.Id;
     }
 
     public async Task<OneOf<Success, NotFound>> UpdatePatientAsync(Guid id, PatientUpdateDTO updatedPatient)

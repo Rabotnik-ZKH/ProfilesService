@@ -28,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Profiles.Contracts\Profiles.Contracts.csproj" />
     <ProjectReference Include="..\Profiles.Infrastructure\Profiles.Infrastructure.csproj" />
-    <ProjectReference Include="..\Profiles.MassTransit\Profiles.MassTransit.csproj" />
     <ProjectReference Include="..\Profiles.Presentation\Profiles.Presentation.csproj" />
     <ProjectReference Include="..\Profiles.Services.Abstractions\Profiles.Services.Abstractions.csproj" />
     <ProjectReference Include="..\Profiles.Services\Profiles.Services.csproj" />

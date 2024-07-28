@@ -11,7 +11,7 @@ public interface IPatientsService
 
     public Task<OneOf<PatientResponseDTO, NotFound>> GetPatientByIdAsync(Guid id);
 
-    public Task<PatientResponseDTO> CreatePatientAsync(PatientCreateDTO newPatient);
+    public Task<Guid> CreatePatientAsync(PatientCreateDTO newPatient);
 
     public Task<OneOf<Success, NotFound>> UpdatePatientAsync(Guid id, PatientUpdateDTO updatedPatient);
 

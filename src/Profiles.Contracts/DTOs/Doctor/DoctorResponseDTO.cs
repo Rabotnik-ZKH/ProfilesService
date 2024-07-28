@@ -18,8 +18,6 @@ public class DoctorResponseDTO()
 
     public int Status { get; set; } 
 
-    public int SpecializationId { get; set; }
-
     public string SpecializationName { get; set; }
 
     public string OfficeAddress { get; set; }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using InnoClinic.SharedModels.MQMessages.Profiles;
+using MassTransit;
 using Microsoft.IdentityModel.Tokens;
 using OneOf;
 using OneOf.Types;
@@ -7,6 +9,7 @@ using Profiles.Contracts.Pagination;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Interfaces;
 using Profiles.Services.Abstractions;
+using System.Text;
 
 namespace Profiles.Services.Services;
 
@@ -14,13 +17,17 @@ public class DoctorsService : IDoctorsService
 {
     private readonly IAccountsRepository _accountsRepository;
     private readonly IDoctorsRepository _doctorsRepository;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly IMapper _mapper;
 
-    public DoctorsService(IAccountsRepository accountsRepository, IDoctorsRepository doctorsRepository,
+    public DoctorsService(IAccountsRepository accountsRepository, 
+        IDoctorsRepository doctorsRepository,
+        IPublishEndpoint publishEndpoint,
         IMapper mapper)
     {
         _accountsRepository = accountsRepository;
         _doctorsRepository = doctorsRepository;
+        _publishEndpoint = publishEndpoint;
         _mapper = mapper;
     }
 
@@ -52,7 +59,7 @@ public class DoctorsService : IDoctorsService
         return mappedDoctor;
     }
     
-    public async Task<DoctorResponseDTO> CreateDoctorAsync(DoctorCreateDTO newDoctor)
+    public async Task<Guid> CreateDoctorAsync(DoctorCreateDTO newDoctor)
     {
         var newDoctorEntity = _mapper.Map<Doctor>(newDoctor);
 
@@ -65,9 +72,16 @@ public class DoctorsService : IDoctorsService
 
         await _doctorsRepository.CreateAsync(newDoctorEntity);
 
-        var doctorResult = _mapper.Map<DoctorResponseDTO>(newDoctorEntity);
-            
-        return doctorResult;
+        var doctorPassword = GeneratePassword(6);
+
+        await _publishEndpoint.Publish<WorkerProfileCreatedMessage>(new()
+        {
+            Email = newDoctor.Email,
+            Password = doctorPassword,
+            Role = "Doctor"
+        });
+
+        return newDoctorEntity.Id;
     }
 
     public async Task<OneOf<Success, NotFound>> UpdateDoctorAsync(Guid id, DoctorUpdateDTO updatedDoctor)
@@ -98,5 +112,21 @@ public class DoctorsService : IDoctorsService
         await _accountsRepository.DeleteAsync(doctorEntity.Account);
 
         return new Success();
+    }
+
+
+    private string GeneratePassword(int length)
+    {
+        const string symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+
+        while (0 < length--)
+        {
+            res.Append(symbols[rnd.Next(symbols.Length)]);
+        }
+        
+        return res.ToString();
     }
 }

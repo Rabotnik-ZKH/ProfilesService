@@ -11,7 +11,7 @@ public interface IReceptionistsService
 
     public Task<OneOf<ReceptionistResponseDTO, NotFound>> GetReceptionistByIdAsync(Guid id);
 
-    public Task<ReceptionistResponseDTO> CreateReceptionistAsync(ReceptionistCreateDTO newReceptionist);
+    public Task<Guid> CreateReceptionistAsync(ReceptionistCreateDTO newReceptionist);
 
     public Task<OneOf<Success, NotFound>> UpdateReceptionistAsync(Guid id, ReceptionistUpdateDTO updatedReceptionist);
 

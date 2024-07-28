@@ -9,6 +9,8 @@ public class BaseUser
     [Required]
     public Guid Id { get; set; }
 
+    public string? PhotoUrl { get; set; }
+
     [Required]
     [MaxLength(100)]
     public string FirstName { get; set; } = null!;

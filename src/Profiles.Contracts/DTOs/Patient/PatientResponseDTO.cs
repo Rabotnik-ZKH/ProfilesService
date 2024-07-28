@@ -4,6 +4,8 @@ public class PatientResponseDTO
 {
     public Guid Id { get; set; }
 
+    public string? PhotoUrl { get; set; }
+
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null;

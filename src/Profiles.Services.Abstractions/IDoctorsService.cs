@@ -11,7 +11,7 @@ public interface IDoctorsService
 
     public Task<OneOf<DoctorResponseDTO, NotFound>> GetDoctorByIdAsync(Guid id);
 
-    public Task<DoctorResponseDTO> CreateDoctorAsync(DoctorCreateDTO newDoctor);
+    public Task<Guid> CreateDoctorAsync(DoctorCreateDTO newDoctor);
     
     public Task<OneOf<Success, NotFound>> UpdateDoctorAsync(Guid id, DoctorUpdateDTO editedDoctor);
 

@@ -15,6 +15,8 @@ using Profiles.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using MassTransit;
+using Profiles.Infrastructure.MassTransit;
 
 namespace Profiles.API.Extensions;
 
@@ -63,6 +65,33 @@ public static class WebApplicationBuilderExtention
             {
                 policy.RequireAuthenticatedUser();
                 policy.RequireClaim("scope", "profiles.api");
+            });
+        });
+
+        builder.Services.AddMassTransit(x =>
+        {
+            x.SetKebabCaseEndpointNameFormatter();
+            x.SetInMemorySagaRepositoryProvider();
+
+            var assembly = typeof(Program).Assembly;
+            x.AddConsumer<OfficeUpdatedConsumer>();
+
+            x.AddSagaStateMachines(assembly);
+            x.AddSagas(assembly);
+            x.AddActivities(assembly);
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+
+                cfg.ReceiveEndpoint("office-updated-appointments", queueConfigurator =>
+                {
+                    queueConfigurator.Consumer<OfficeUpdatedConsumer>(context);
+                });
             });
         });
 

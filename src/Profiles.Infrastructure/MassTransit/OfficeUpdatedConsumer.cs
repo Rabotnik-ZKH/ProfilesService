@@ -3,7 +3,7 @@ using MassTransit;
 using Profiles.Contracts.Pagination;
 using Profiles.Domain.Interfaces;
 
-namespace Appointments.API;
+namespace Profiles.Infrastructure.MassTransit;
 
 public class OfficeUpdatedConsumer : IConsumer<OfficeUpdatedMessage>
 {
