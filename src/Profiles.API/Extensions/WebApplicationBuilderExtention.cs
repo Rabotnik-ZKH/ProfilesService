@@ -68,6 +68,9 @@ public static class WebApplicationBuilderExtention
             });
         });
 
+        var rabbitMqConfiguration = builder.Configuration.GetSection("RabbitMQ")
+                .Get<RabbitMQConfiguration>();
+
         builder.Services.AddMassTransit(x =>
         {
             x.SetKebabCaseEndpointNameFormatter();
@@ -82,10 +85,10 @@ public static class WebApplicationBuilderExtention
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", "/", h =>
+                cfg.Host(rabbitMqConfiguration.HostName, "/", h =>
                 {
-                    h.Username("guest");
-                    h.Password("guest");
+                    h.Username(rabbitMqConfiguration.UserName);
+                    h.Password(rabbitMqConfiguration.Password);
                 });
 
                 cfg.ReceiveEndpoint("office-updated-appointments", queueConfigurator =>
